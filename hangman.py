@@ -26,6 +26,7 @@ for char in char_chosen_word:
 guessed_letters = []
 
 print("Chosen word: " + chosen_word) # Testing purposes (delete after game is finished)
+
 #-----------------------------------------------------
 #-------------------- FUNCTIONS ----------------------
 def ShowWordProgress():
