@@ -29,6 +29,7 @@ print("Chosen word: " + chosen_word) # Testing purposes (delete after game is fi
 #-----------------------------------------------------
 #-------------------- FUNCTIONS ----------------------
 def ShowWordProgress():
+    # Print the user's guess so far for their convenience
     print("\nHere is the word so far:")
     print(guess)
     
@@ -45,20 +46,19 @@ def GetUserInput():
         GetUserInput()
     else:
         guessed_letters.append(input_guess)
-        
     return input_guess
 
 def CheckInput(letter_guess):
     # Get the letter guess and check it against the char array of the chosen word
+    # Also, return how many guesses were used up
     if (letter_guess in char_chosen_word):
         print("Correct!")
         for i in range(len(char_chosen_word)):
             if (letter_guess in char_chosen_word[i]):
                 guess[i] = letter_guess
         return 0
-    else:
-        print("Nope!")
-        return 1
+    print("Nope!")
+    return 1
         
 def CheckGameOver():
     if (guesses_left == 0):
@@ -67,22 +67,19 @@ def CheckGameOver():
     elif (guess == char_chosen_word):
         print("You guessed the word! Congratulations!")
         return True
-    else:
-        return False
+    return False
 
 #-----------------------------------------------------
-#-------------------- MAIN CODE ----------------------
+#------------------ MAIN GAME LOOP -------------------
 print("~~~~~~~~~~ Welcome to Hangman! ~~~~~~~~~")
-print("I've chosen a word. Guess it by picking letters and seeing where it goes!")
-while (game_over == False):
+print("I've chosen a word. Guess it by picking letters!")
+
+while not game_over:
     ShowWordProgress()
     ShowGuessedLetters()
-    guesses_used = CheckInput(GetUserInput())
-    guesses_left -= guesses_used
+    guesses_left -= CheckInput(GetUserInput())
     game_over = CheckGameOver()
-    if (game_over == True):
-        print("The word was: " + chosen_word)
-    else:
-        print("Number of guesses left: {}".format(guesses_left))
-    
+    print(f"Guesses left: {guesses_left}")
+
+print(f"The word was: {chosen_word}")
 print("~~~~~~~~~~~~~ GAME OVER ~~~~~~~~~~~~~~")
