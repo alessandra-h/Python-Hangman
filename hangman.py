@@ -18,9 +18,7 @@ char_chosen_word = list(chosen_word)
 MISSING_LETTER = "_ "
 
 # Initialise a char array of missing letters (that will hold the letters of each correct guess)
-guess = []
-for char in char_chosen_word:
-    guess.append(MISSING_LETTER)
+guess = [MISSING_LETTER] * len(char_chosen_word)
 
 # Initialise a char array of the letters already guessed
 guessed_letters = []
