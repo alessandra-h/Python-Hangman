@@ -1,10 +1,12 @@
 import random
 
 # ----------------- INITIALISATION -------------------
-# Create flag to show whether the game is over or not
-# and how many attempts are allowed before it's game over.
+# Create a constant of how many guesses are allowed before it's game over
+# and create flag to show whether the game is over or not
+# and how many guesses the user has
+GUESS_LIMIT = 6
 game_over = False
-ATTEMPT_LIMIT = 10
+guesses_left = GUESS_LIMIT
 
 # Create array of words and pick a word from the array
 # then put the chosen word into an array/list of chars
@@ -15,7 +17,7 @@ char_chosen_word = list(chosen_word)
 # Create a constant string that can be added to replace any missing letters
 MISSING_LETTER = "_ "
 
-# Initialise a char array that will hold the letters of each correct guess
+# Initialise a char array of missing letters (that will hold the letters of each correct guess)
 guess = []
 for char in char_chosen_word:
     guess.append(MISSING_LETTER)
@@ -53,8 +55,20 @@ def CheckInput(letter_guess):
         for i in range(len(char_chosen_word)):
             if (letter_guess in char_chosen_word[i]):
                 guess[i] = letter_guess
+        return 0
     else:
         print("Nope!")
+        return 1
+        
+def CheckGameOver():
+    if (guesses_left == 0):
+        print("Sorry, you ran out of guesses! Game over!")
+        return True
+    elif (guess == char_chosen_word):
+        print("You guessed the word! Congratulations!")
+        return True
+    else:
+        return False
 
 #-----------------------------------------------------
 #-------------------- MAIN CODE ----------------------
@@ -63,6 +77,12 @@ print("I've chosen a word. Guess it by picking letters and seeing where it goes!
 while (game_over == False):
     ShowWordProgress()
     ShowGuessedLetters()
-    CheckInput(GetUserInput())
+    guesses_used = CheckInput(GetUserInput())
+    guesses_left -= guesses_used
+    game_over = CheckGameOver()
+    if (game_over == True):
+        print("The word was: " + chosen_word)
+    else:
+        print("Number of guesses left: {}".format(guesses_left))
     
-print("~~~~~~ GAME OVER ~~~~~~")
+print("~~~~~~~~~~~~~ GAME OVER ~~~~~~~~~~~~~~")
